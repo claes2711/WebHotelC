@@ -9,7 +9,9 @@ namespace WebHotel.Models
     public class Room
     {
         [Key]
+        [Display(Name = "ID")]
         public int ID { get; set; }
+
 
         [Required]
         [Display(Name = "Level")]
