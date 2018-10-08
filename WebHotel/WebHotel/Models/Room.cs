@@ -23,7 +23,7 @@ namespace WebHotel.Models
         [Display(Name = "Price")]
         public decimal Price { get; set; }
 
-        [Required]
+        [Required] 
         [Display(Name = "TheBookings")]
         public ICollection<Room> TheBookings { get; set; }
     }
