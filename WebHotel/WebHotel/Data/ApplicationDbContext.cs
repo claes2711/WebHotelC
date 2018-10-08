@@ -22,5 +22,7 @@ namespace WebHotel.Data
         }
 
         public DbSet<WebHotel.Models.Room> Room { get; set; }
+
+        public DbSet<WebHotel.Models.Customer> Customer { get; set; }
     }
 }
