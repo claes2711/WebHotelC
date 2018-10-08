@@ -9,7 +9,9 @@ namespace WebHotel.Models
     public class Room
     {
         [Key]
+        [Display(Name = "ID")]
         public int ID { get; set; }
+
 
         [Required]
         [Display(Name = "Level")]
@@ -23,8 +25,8 @@ namespace WebHotel.Models
         [Display(Name = "Price")]
         public decimal Price { get; set; }
 
-        [Required] 
-        [Display(Name = "TheBookings")]
-        public ICollection<Room> TheBookings { get; set; }
+
+        // Navigation properties
+        public ICollection<Booking> TheBookings { get; set; }
     }
 }
