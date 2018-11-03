@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using WebHotel.Data;
 using WebHotel.Models;
@@ -31,6 +32,13 @@ namespace WebHotel.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        // GET: Bookings/CustomerIndex
+        public async Task<IActionResult> CustomerIndex()
+        {
+            var applicationDbContext = _context.Booking.Include(b => b.TheCustomer).Include(b => b.TheRoom).Where(b => b.Email == User.Identity.Name);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
         // GET: Bookings/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -48,6 +56,39 @@ namespace WebHotel.Controllers
                 return NotFound();
             }
 
+            return View(booking);
+        }
+
+
+        // GET: Bookings/Search
+        public IActionResult Search()
+        {
+            ViewData["RoomID"] = new SelectList(_context.Room, "ID", "ID");
+            return View();
+        }
+
+        // POST: Bookings/Search
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Search(SearchBookings booking)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var theRoom = await _context.Room.FindAsync(booking.BedCount);
+
+                var parameter0 = new SqliteParameter("para0", theRoom.BedCount);
+
+                var room = await _context.Booking.FromSql("select * from [Room] inner join [Booking] on [Room].ID = [Booking].RoomID" + "where BedCount = @para0 ", parameter0).Select(b => new Room { ID = booking.RoomID, BedCount = theRoom.BedCount, Level = theRoom.Level}).SingleOrDefaultAsync();
+                
+
+
+                ViewBag.Room = room;
+
+            }
+            ViewData["RoomID"] = new SelectList(_context.Room, "ID", "ID", booking.RoomID);
             return View(booking);
         }
 
@@ -91,6 +132,7 @@ namespace WebHotel.Controllers
 
                 ViewBag.Room = booking.RoomID;
                 ViewBag.TotalCost = roomBooking.Cost;
+                ViewBag.Level = theRoom.Level;
                 ViewBag.Checkout = booking.CheckOut;
                 ViewBag.Checkin = booking.CheckIn;
                 ViewBag.Night = dd;

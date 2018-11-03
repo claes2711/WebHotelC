@@ -5,10 +5,10 @@
 @inject UserManager<ApplicationUser> UserManager
 
 @{
-    ViewData["Title"] = "Search";
+    ViewData["Title"] = "Book";
 }
 
-<h2>Search</h2>
+<h2>Booking a Room</h2>
 
 <hr />
 <div class="row">
@@ -45,7 +45,7 @@
 {
     <div>
         <hr />
-        <h4> You have Book Check In Date:  @ViewBag.Checkin  , Check out date: @ViewBag.Checkout Room: @ViewBag.Room, Staying @ViewBag.Night Night,  for total price of $@ViewBag.TotalCost</h4>
+        <h4> You have Book Check In Date:  @ViewBag.Checkin  , Check out date: @ViewBag.Checkout Room: @ViewBag.Room, Level: @ViewBag.Level, Staying @ViewBag.Night Night,  for total price of $@ViewBag.TotalCost</h4>
     </div>
 }
 
