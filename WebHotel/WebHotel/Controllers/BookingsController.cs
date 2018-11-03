@@ -52,10 +52,10 @@ namespace WebHotel.Controllers
         }
 
         // GET: Bookings/Search
-        public IActionResult Search()
+        public IActionResult Book()
         {
             ViewData["Email"] = new SelectList(_context.Customer, "Email", "Email");
-            ViewData["RoomID"] = new SelectList(_context.Room, "ID", "Level");
+            ViewData["RoomID"] = new SelectList(_context.Room, "ID", "ID");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace WebHotel.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Search(MakeBookings booking)
+        public async Task<IActionResult> Book(MakeBookings booking)
         {
             if (ModelState.IsValid)
             {

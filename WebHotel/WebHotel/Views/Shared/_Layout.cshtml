@@ -35,9 +35,9 @@
                     @if (User.IsInRole("Customers"))
                     {
                     <li><a asp-area="" asp-controller="Customers" asp-action="MyDetails">My Details</a></li>
-                    <li><a asp-area="" asp-controller="" asp-action="">Search Rooms</a></li>
-                    <li><a asp-area="" asp-controller="" asp-action="">Book A Room</a></li>
-                    <li><a asp-area="" asp-controller="" asp-action="">My Bookkings</a></li>
+                    <li><a asp-area="" asp-controller="Bookings" asp-action="Search">Search Rooms</a></li>
+                    <li><a asp-area="" asp-controller="Bookings" asp-action="Book">Book A Room</a></li>
+                    <li><a asp-area="" asp-controller="" asp-action="">My Bookings</a></li>
                     }
                     @if (User.IsInRole("Admin"))
                     {
