@@ -73,7 +73,8 @@ namespace WebHotel.Controllers
                     RoomID = booking.RoomID,
                     CheckIn = booking.CheckIn,
                     CheckOut = booking.CheckOut,
-                    Email = booking.Email
+                    Email = booking.Email,
+
                 };
                 
                 var theRoom = await _context.Room.FindAsync(booking.RoomID);
@@ -85,6 +86,9 @@ namespace WebHotel.Controllers
                 int dd = (int)dateDiff.TotalDays;
                 roomBooking.Cost = dd * theRoom.Price;
 
+                _context.Add(roomBooking);
+                await _context.SaveChangesAsync();
+
                 ViewBag.Room = booking.RoomID;
                 ViewBag.TotalCost = roomBooking.Cost;
                 ViewBag.Checkout = booking.CheckOut;
@@ -93,7 +97,7 @@ namespace WebHotel.Controllers
 
             }
             ViewData["Email"] = new SelectList(_context.Customer, "Email", "Email", booking.Email);
-            ViewData["RoomID"] = new SelectList(_context.Room, "ID", "Level", booking.RoomID);
+            ViewData["RoomID"] = new SelectList(_context.Room, "ID", "ID", booking.RoomID);
             return View(booking);
         }
 
