@@ -12,7 +12,7 @@ using WebHotel.Models;
 
 namespace WebHotel.Controllers
 {
-    //[Authorize(Roles = "Customers")]
+    [Authorize(Roles = "Customers")]
     public class CustomersController : Controller
     {
         private readonly ApplicationDbContext _context;

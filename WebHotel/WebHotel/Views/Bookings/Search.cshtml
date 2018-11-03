@@ -1,4 +1,8 @@
-﻿@model WebHotel.Models.Booking
+﻿@model WebHotel.Models.BookingViewModels.MakeBookings
+
+@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Search";
@@ -11,9 +15,10 @@
     <div class="col-md-4">
         <form asp-action="Search">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Email" value="@UserManager.GetUserName(User)" />
             <div class="form-group">
-                <label asp-for="TheRoom" class="control-label"></label>
-                <select asp-for="TheRoom" class="form-control" asp-items="ViewBag.RoomID"></select>
+                <label asp-for="RoomID" class="control-label"></label>
+                <select asp-for="RoomID" class="form-control" asp-items="ViewBag.RoomID"></select>
             </div>
             <div class="form-group">
                 <label asp-for="CheckIn" class="control-label"></label>
@@ -35,6 +40,14 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+@if (ViewBag.Room != null)
+{
+    <div>
+        <hr />
+        <h4> You have Book Check In Date:  @ViewBag.Checkin  , Check out date: @ViewBag.Checkout Room: @ViewBag.Room, Staying @ViewBag.Night Night,  for total price of $@ViewBag.TotalCost</h4>
+    </div>
+}
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
